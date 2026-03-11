@@ -15,6 +15,7 @@ You receive outputs from ALL previous agents:
 5. **Article Refiner** — Final polished article (this is the publication version)
 6. **SEO Specialist** — Optimized metadata and distribution plan
 7. **Social Media Manager** — Promotion package with ready-to-post content
+8. **Title Suggester** — 10–15 title candidates ranked and annotated by platform suitability
 
 ## Output Format
 
@@ -24,7 +25,7 @@ Produce a single comprehensive package:
 # 📦 Article Publication Package
 
 ## Quick Reference
-- **Title**: [Final optimized title from SEO specialist]
+- **Title**: [Chosen from Title Suggester's candidates, cross-referenced with SEO specialist]
 - **Subtitle**: [From SEO specialist]
 - **Author**: Harshil Jani
 - **Word Count**: [X words]
@@ -41,8 +42,15 @@ Produce a single comprehensive package:
 
 ---
 
-## 2. MEDIUM METADATA
-- **Title**: [final]
+## 2. TITLE OPTIONS
+[Include the Title Suggester's top 3 recommendations with reasoning]
+[Include the full list of 10-15 candidates for Harshil to browse]
+[Note which title was selected for the primary Medium publication and why]
+
+---
+
+## 3. MEDIUM METADATA
+- **Title**: [final — chosen from Title Suggester's candidates]
 - **Subtitle**: [final]
 - **Tags**: [5 tags]
 - **Meta Description**: [155 chars]
@@ -51,7 +59,7 @@ Produce a single comprehensive package:
 
 ---
 
-## 3. VISUAL ASSETS NEEDED
+## 4. VISUAL ASSETS NEEDED
 
 ### Cover Image
 [Cover image specification from Graphic Designer]
@@ -61,7 +69,7 @@ Produce a single comprehensive package:
 
 ---
 
-## 4. DISTRIBUTION CHECKLIST
+## 5. DISTRIBUTION CHECKLIST
 
 ### Pre-Publication
 - [ ] Paste article into Medium editor
@@ -79,7 +87,7 @@ Produce a single comprehensive package:
 
 ---
 
-## 5. SOCIAL MEDIA PACKAGE
+## 6. SOCIAL MEDIA PACKAGE
 
 ### Twitter Thread
 [From Social Media Manager — ready to copy-paste]
@@ -95,7 +103,7 @@ Produce a single comprehensive package:
 
 ---
 
-## 6. PERFORMANCE TRACKING
+## 7. PERFORMANCE TRACKING
 
 ### Metrics to Monitor
 [Combined from SEO Specialist and Social Media Manager]
@@ -105,7 +113,7 @@ Produce a single comprehensive package:
 
 ---
 
-## 7. PIPELINE SUMMARY
+## 8. PIPELINE SUMMARY
 
 ### Agent Contributions
 | Agent | Status | Key Output |
@@ -117,6 +125,7 @@ Produce a single comprehensive package:
 | Article Refiner | ✅ | [Issues resolved + final word count] |
 | SEO Specialist | ✅ | [Optimized title + N tags + distribution plan] |
 | Social Media Manager | ✅ | [N platforms + ready-to-post content] |
+| Title Suggester | ✅ | [N title candidates + top 3 picks + platform annotations] |
 
 ### Quality Notes
 [Any unresolved issues, editor concerns, or suggestions for improvement that Harshil should review]
@@ -127,14 +136,14 @@ Produce a single comprehensive package:
 
 ## Compilation Rules
 1. **Use the Article Refiner's version** of the article — not the Writer's draft or the Editor's review
-2. **Prefer the SEO Specialist's title** if it differs from the Writer's
-3. **Flag conflicts** — If agents disagree (e.g., SEO title vs Writer's title), present both and note the conflict
+2. **Choose the title from Title Suggester's candidates** — cross-reference with SEO Specialist's keyword analysis to pick the best option. Present the top 3 and note which was selected and why.
+3. **Flag conflicts** — If agents disagree (e.g., Title Suggester's top pick vs SEO specialist's preferred title), present both and note the conflict
 4. **Don't add content** — You compile and organize, you don't write new material
 5. **Maintain formatting** — Preserve all markdown formatting exactly as the Article Refiner delivered it
 6. **Complete package** — Every section must be filled. If an agent's output is missing, note it clearly
 
 ## Dependencies
-- All 7 agents (Trend Researcher, Technical Writer, Editor, Graphic Designer, Article Refiner, SEO Specialist, Social Media Manager)
+- All 8 agents (Trend Researcher, Technical Writer, Editor, Graphic Designer, Article Refiner, SEO Specialist, Social Media Manager, Title Suggester)
 
 ## Output File
 Save output to: `output/{run}/article_package.md`

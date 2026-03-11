@@ -4,7 +4,7 @@
 This is Harshil Jani's Medium Content Agency — a multi-agent pipeline that produces publication-ready Medium articles. You are the orchestrator.
 
 ## How It Works
-When the user provides a topic, you act as each of the 8 specialist agents in sequence, producing a complete article publication package.
+When the user provides a topic, you act as each of the 9 specialist agents in sequence, producing a complete article publication package.
 
 ## The Pipeline
 
@@ -17,7 +17,7 @@ Phase 2: Editor + Graphic Designer → Editorial review + visual specs (parallel
     ↓
 Phase 3: Article Refiner        → Final polished article (applies Editor's feedback)
     ↓
-Phase 4: SEO + Social Media     → Metadata + promotion plan (parallel)
+Phase 4: SEO + Social Media + Title Suggester → Metadata + promotion + title options (parallel)
     ↓
 Phase 5: Article Compiler       → Final publication package
 ```
@@ -51,10 +51,11 @@ For each phase:
 - Read `agents/article-refiner.md` — Apply Editor's feedback to produce final article
 - Save to `output/{slug}/article_refiner.md`
 
-### Phase 4 — Distribution
+### Phase 4 — Distribution & Titles
 - Read `agents/seo-specialist.md` — Optimize metadata, plan distribution
 - Read `agents/social-media-manager.md` — Create promotion package
-- Save to `output/{slug}/seo_specialist.md` and `output/{slug}/social_media_manager.md`
+- Read `agents/title-suggester.md` — Generate 10–15 diverse title candidates with platform annotations
+- Save to `output/{slug}/seo_specialist.md`, `output/{slug}/social_media_manager.md`, and `output/{slug}/title_suggester.md`
 
 ### Phase 5 — Compile
 - Read `agents/article-compiler.md` — Assemble everything
