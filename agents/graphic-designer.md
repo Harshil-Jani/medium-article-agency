@@ -137,5 +137,63 @@ Excalidraw or draw.io (specify which is better suited for this diagram)
 ## Dependencies
 - Technical Writer output (article draft — needed to understand what visuals support the content)
 
-## Output File
-Save output to: `output/{run}/graphic_designer.md`
+## Output Files (MANDATORY — both the spec AND the source files)
+
+### 1. The prose specification
+Save to: `output/{run}/graphic_designer.md` (the document described above).
+
+### 2. The source files that compile to PNGs
+
+These live in `output/{run}/assets/` and are consumed by `scripts/compile_assets.py`. Without these, `scripts/to_medium.py` cannot embed images in the final Medium-paste HTML.
+
+| File | What it produces | When to use |
+|---|---|---|
+| `cover.py` | `cover.png` (1500×750 branded card) | Always — every article gets a cover |
+| `diagram-NN.mmd` | `diagram-NN.png` via Mermaid CLI | Architectures, flowcharts, sequences, decision trees |
+| `diagram-NN.py` | `diagram-NN.png` via matplotlib/Pillow | Charts (bar, line, Sankey, U-curve), dashboards, infographics |
+
+**Critical naming rule**: the file numbering must match the ORDER of `[Insert Diagram: ...]` / `[Diagram: ...]` markers in the article body. `diagram-01` matches the first marker, `diagram-02` the second, etc. If the article has 2 diagram markers, you produce `diagram-01.{mmd,py}` and `diagram-02.{mmd,py}`. **Markers labeled `[Insert Table: ...]` are skipped** — markdown tables render natively, no PNG needed.
+
+### Cover template
+Every `cover.py` imports the shared template:
+```python
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "scripts"))
+from cover_template import make_cover
+
+make_cover(
+    part=N,
+    title="The Article Title (no series prefix)",
+    subtitle="One-line hook.",
+    accent_text="optional small text bottom-right",
+    output_path=Path(__file__).parent / "cover.png",
+)
+```
+
+### Mermaid source style
+Use the brand palette (`#1A73E8` blue, `#FF6B35` orange, `#34A853` green, `#FFC107` decision yellow, `#2D2D2D` dark, `#D93025` danger red) via inline `style` directives:
+```mermaid
+---
+title: <diagram title>
+---
+flowchart LR
+    A["Start"] --> B["Step"]
+    style A fill:#1A73E8,stroke:#1A73E8,color:#ffffff
+```
+
+### matplotlib source style
+- Use brand palette hex codes directly.
+- Set `dpi=160` on `savefig` so the PNG looks crisp in Medium.
+- Hide top + right spines, use `bbox_inches="tight"`.
+- Write output to `Path(__file__).parent / "diagram-NN.png"` so the renderer finds it.
+
+### Skipped diagrams
+- "Table" specs (e.g., a 5-row comparison table): render as a markdown table directly in the article body. Do NOT produce a source file.
+- "KV cache size math" / similar prose calculations: prefer a markdown table over a PNG unless the visual adds real value.
+
+## Asset Quality Standards (in addition to spec quality standards above)
+1. **PNG generation must succeed** — `python3 scripts/compile_assets.py {part}` should produce all expected PNGs with zero errors. If a render fails, the source file is broken.
+2. **Source files match marker order** — first marker in body → `diagram-01`, second → `diagram-02`.
+3. **Use the brand palette consistently** — no off-palette colors.
+4. **File size sanity check** — covers ~40 KB, diagrams 50-150 KB. If a PNG is over 500 KB, something is off (probably DPI too high or unnecessary detail).

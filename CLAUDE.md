@@ -13,13 +13,20 @@ Phase 0: Trend Researcher       → Topic brief with ranked suggestions
     ↓
 Phase 1: Technical Writer       → 800-1,000 word draft article
     ↓
-Phase 2: Editor + Graphic Designer → Editorial review + visual specs (parallel)
+Phase 2: Editor + Graphic Designer → Editorial review + visual specs +
+                                     source files (parallel)
     ↓
 Phase 3: Article Refiner        → Final polished article (applies Editor's feedback)
     ↓
 Phase 4: SEO + Social Media + Title Suggester → Metadata + promotion + title options (parallel)
     ↓
 Phase 5: Article Compiler       → Final publication package
+    ↓
+Phase 5.5: Asset Compiler       → PNG cover + inline diagram images
+                                  (rendered from graphic_designer source files)
+    ↓
+Phase 6: Medium Render          → medium-paste.html with embedded cover + diagrams
+                                  (paste-ready for Medium editor)
 ```
 
 ## Running the Pipeline
@@ -60,6 +67,21 @@ For each phase:
 ### Phase 5 — Compile
 - Read `agents/article-compiler.md` — Assemble everything
 - Save to `output/{slug}/article_package.md`
+
+### Phase 5.5 — Asset Compilation (MANDATORY before Phase 6)
+The Graphic Designer must produce **source files**, not just prose specs:
+- `output/{slug}/assets/cover.py` — uses `scripts/cover_template.make_cover()` to render `cover.png`
+- `output/{slug}/assets/diagram-NN.mmd` — Mermaid source for flowcharts/architectures (rendered via `mmdc`)
+- `output/{slug}/assets/diagram-NN.py` — Python (matplotlib/Pillow) source for charts/dashboards (renders its own PNG)
+- File naming is **ordinal**: `diagram-01` matches the FIRST `[Insert Diagram: ...]` marker in the article body, `diagram-02` the second, etc.
+- Tables embedded in the article body (e.g., 5-pattern comparison tables) do NOT need PNG source files — they render natively from the markdown table.
+
+Run: `python3 scripts/compile_assets.py {part}` (or `all`). Produces all PNGs alongside the source files.
+
+### Phase 6 — Medium Render (paste-ready HTML)
+- Run `python3 scripts/to_medium.py {part}` to produce `output/{slug}/medium-paste.html`.
+- The renderer extracts the article body, converts markdown → HTML via pandoc, embeds `cover.png` at the top, and replaces `[Insert Diagram: ...]` / `[Diagram: ...]` markers with `<img>` tags pointing at the compiled PNGs.
+- Open in browser → Cmd+A → Cmd+C → paste into Medium's editor body. Add cover image as Medium's featured image manually; the inline PNGs paste in place.
 
 ## Quality Gate
 After the Editor phase, check the quality score:
